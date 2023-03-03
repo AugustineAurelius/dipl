@@ -28,10 +28,7 @@ class  Block {
     readDataFromExcel(){
         const parse = (filename) => {
             const excelData = XLSX.readFile(filename);
-            return Object.keys(excelData.Sheets).map((name) =>({
-                data: XLSX.utils.sheet_to_json(excelData.Sheets[name])[0],
-            }));
-        }
+            return Object.keys(excelData.Sheets).map((name) =>({data: XLSX.utils.sheet_to_json(excelData.Sheets[name])[0]}))};
         
         let par = parse("./Rza.xlsx")[0].data;
         let string = '|Время/Дата| ' + par['Время/Дата']+ ' |Виртуальное устройство| ' +par['Виртуальное устройство'] 
@@ -80,7 +77,7 @@ class  Block {
     // }
 
     showData(){
-        console.log(this.#data);
+        return this.#data;
     }
 }
 module.exports = Block;
