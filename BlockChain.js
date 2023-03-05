@@ -15,9 +15,9 @@ class  BlockChain   {
     }
 
     addBlock(newBlock){
-        newBlock.index = this.chain.length;
-        newBlock.previousHash = this.getLatestBlock().hash;
-        newBlock.hash = newBlock.calculateHash();
+        newBlock.setIndex(this.chain.length);
+        newBlock.setPreviousHash(this.getLatestBlock().getHash());
+        newBlock.setHash(newBlock.calculateHash());
         this.chain.push(newBlock);
     }
 
@@ -30,6 +30,32 @@ class  BlockChain   {
             }
         }
         return true;
+    }
+
+    showData(){
+        var Data = []
+
+        for (let i = 0; i<this.chain.length; i++){
+            // if (time<this.chain[i].){
+                console.log(this.chain[i].getData())
+                Data.push(this.chain[i].getData())
+            // }else {continue} 
+        }
+        return Data
+    }
+
+    showInformation (){
+        var result = []
+        for (let i = 0; i<this.chain.length; i++){
+            const information = new Map();
+            information.set('Index', this.chain[i].getIndex());
+            information.set('Timestamp', this.chain[i].getTimestamp());
+            information.set('Hash', this.chain[i].getHash());
+            information.set('PreviousHash', this.chain[i].getPreviousHash());
+            information.set('MadeBy', this.chain[i].getMadeBy());
+            result.push(information);
+        }
+        return result
     }
     
 }
