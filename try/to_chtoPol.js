@@ -1,47 +1,26 @@
-const SHA256 = require('crypto-js/sha256');
-const XLSX = require('xlsx');
+U = 363000;
+Unr = (Math.sqrt(2)/Math.sqrt(3))*U
+console.log(Unr)
+l = 280
+d=60 //sm
+tmax = 25
+p=772
 
-class  Block {
-    #data;
-    
-    constructor (index, previousHash = '0'){
-        if (index == 0){
-            this.index = index;
-            this.timestamp = new Date();
-            this.#data = previousHash;
-            this.previousHash = "zero";
-            this.hash = this.calculateHash();
-        }else{
-            this.index = index;
-            this.timestamp = new Date();
-            let dt = this.readDataFromExcel();
-            this.#data = dt ;
-            this.previousHash = previousHash;
-            let hs = this.calculateHash();
-            this.hash = hs;
-        }
-        
-    }
+r0 = 1.12
 
-    calculateHash(){
-        return SHA256((this.index + this.previousHash + this.timestamp + JSON.stringify(this.data)),'pass').toString();
-    }
-    
-    
-    readDataFromExcel(){
-        const parse = (filename) => {
-            const excelData = XLSX.readFile(filename);
-        
-            return Object.keys(excelData.Sheets).map((name) =>({
-                data: XLSX.utils.sheet_to_json(excelData.Sheets[name])[0],
-            }));
-        }
-        
-        let par = parse("./Rza.xlsx")[0].data[0];
-        let string = '|Время/Дата| ' + par['Время/Дата']+ ' |Виртуальное устройство| ' +par['Виртуальное устройство'] 
-        + ' |Описание| ' + par['Описание'] + ' |Значение| ' + par['Значение'];
-               
-        return  string;
-    }
-    
-}
+s1=s2 = 4+4.2+4.2+4;
+s3=s1/2;
+sekv = Math.cbrt(s1*s2*s3);
+console.log(sekv + ' = Sekv');
+
+rp = d/(2*Math.sin(Math.PI/2));
+console.log(rp + ' = rp');
+rekv = Math.sqrt(r0*2*rp);
+console.log(rekv + '   = r ekv');
+e0 = 8.85418781762039 * Math.pow(10,-12);
+
+condensation = 2.4*Math.PI*e0*((1/(Math.log(sekv/rekv)))-0.018);
+condkr = condensation*0.95;
+console.log(condensation + '  c0' );
+console.log(condkr + '  condkr' );
+

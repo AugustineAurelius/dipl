@@ -1,9 +1,11 @@
 const Block = require('./Block')
 
 class  BlockChain   {
-
-    constructor (){
+    
+    constructor (whereRead = ''){
         this.chain = [this.createGenesisBlock()];
+        this.whereRead = whereRead;
+        this.lastDataFromExcel = '';
     }
 
     createGenesisBlock(){
@@ -18,14 +20,23 @@ class  BlockChain   {
         newBlock.setIndex(this.chain.length);
         newBlock.setPreviousHash(this.getLatestBlock().getHash());
         newBlock.setHash(newBlock.calculateHash());
+        newBlock.setData(this.whereRead)
+        this.lastDataFromExcel = newBlock.readDataFromExcel(this.whereRead)
         this.chain.push(newBlock);
     }
 
+    addBlockServ(newBlock){
+        newBlock.setIndex(this.chain.length);
+        newBlock.setPreviousHash(this.getLatestBlock().getHash());
+        newBlock.setHash(newBlock.calculateHash());
+        this.chain.push(newBlock);
+    }
+    
     isValid() {
         for (let i = 1; i<this.chain.length; i++){
             const currentBlock = this.chain[i];
             const prevBlock = this.chain[i-1];
-            if (currentBlock.hash != currentBlock.calculateHash() || prevBlock.hash != currentBlock.previousHash){
+            if (prevBlock.getHash() != currentBlock.getPreviousHash()){
                 return false;
             }
         }
@@ -34,12 +45,8 @@ class  BlockChain   {
 
     showData(){
         var Data = []
-
         for (let i = 0; i<this.chain.length; i++){
-            // if (time<this.chain[i].){
-                console.log(this.chain[i].getData())
                 Data.push(this.chain[i].getData())
-            // }else {continue} 
         }
         return Data
     }
@@ -48,15 +55,22 @@ class  BlockChain   {
         var result = []
         for (let i = 0; i<this.chain.length; i++){
             const information = new Map();
-            information.set('Index', this.chain[i].getIndex());
-            information.set('Timestamp', this.chain[i].getTimestamp());
-            information.set('Hash', this.chain[i].getHash());
+            information.set('Index       ', this.chain[i].getIndex());
+            information.set('Timestamp   ', this.chain[i].getTimestamp());
             information.set('PreviousHash', this.chain[i].getPreviousHash());
-            information.set('MadeBy', this.chain[i].getMadeBy());
+            information.set('Hash        ', this.chain[i].getHash());  
+            information.set('MadeBy      ', this.chain[i].getMadeBy());
             result.push(information);
         }
         return result
     }
     
+    checkData () {
+        if (this.lastDataFromExcel != this.getLatestBlock().readDataFromExcel(this.whereRead) && this.getLatestBlock().getMadeBy() == 'service'){
+            this.addBlock(new Block());
+            return true;
+        }else {return false}
+    }
+
 }
 module.exports = BlockChain;

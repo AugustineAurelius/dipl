@@ -11,33 +11,32 @@ class  Block {
 
     constructor (index, previousHash, madeBy = 'blockChain'){
         if (index == 0){
-            this.index = 0;
+            this.#index = 0;
             this.#timestamp = new Date();
             this.#data = previousHash;
             this.#previousHash = "zero";
             this.#hash = this.calculateHash();
-            this.#madeBy = madeBy;
+            this.#madeBy = "First block";
         }else{
             this.#index = index;
             this.#timestamp = new Date();
-            this.#data = this.readDataFromExcel();
+            this.#data = '' //this.readDataFromExcel();
             this.#previousHash = previousHash;
             this.#hash = this.calculateHash();
             this.#madeBy = madeBy;
         }
-        
     }
 
     calculateHash(){
         return SHA256(this.#index + this.#previousHash + this.#timestamp + JSON.stringify(this.#data)).toString();
     }
     
-    readDataFromExcel(){
+    readDataFromExcel(whereRead = ''){
         const parse = (filename) => {
             const excelData = XLSX.readFile(filename);
             return Object.keys(excelData.Sheets).map((name) =>({data: XLSX.utils.sheet_to_json(excelData.Sheets[name])[0]}))};
         
-        let par = parse("./Rza.xlsx")[0].data;
+        let par = parse(whereRead)[0].data;
         let string = '|Время/Дата| ' + par['Время/Дата']+ ' |Виртуальное устройство| ' +par['Виртуальное устройство'] 
         + ' |Описание| ' + par['Описание'] + ' |Значение| ' + par['Значение'];
                
@@ -74,6 +73,10 @@ class  Block {
 
     setIndex(index){
         this.#index = index;
+    }
+
+    setData (whereRead){
+        this.#data = this.readDataFromExcel(whereRead);
     }
 
     setPreviousHash (previousHash){
