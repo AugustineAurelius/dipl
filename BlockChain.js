@@ -56,7 +56,7 @@ class  BlockChain   {
         for (let i = 0; i<this.chain.length; i++){
             const information = new Map();
             information.set('Index       ', this.chain[i].getIndex());
-            information.set('Timestamp   ', this.chain[i].getTimestamp());
+            information.set('Timestamp   ', this.chain[i].getTimestamp().toString());
             information.set('PreviousHash', this.chain[i].getPreviousHash());
             information.set('Hash        ', this.chain[i].getHash());  
             information.set('MadeBy      ', this.chain[i].getMadeBy());

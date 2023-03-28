@@ -3,15 +3,22 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node ./project_1/protos/client.js "
   },
   "author": "",
   "license": "ISC",
   "description": "",
   "dependencies": {
+    "@grpc/grpc-js": "^1.8.12",
+    "@grpc/proto-loader": "^0.7.6",
     "aes-js": "^3.1.2",
+    "config": "^3.3.9",
     "crypto-js": "^4.1.1",
     "excel": "^1.0.1",
+    "google-protobuf": "^3.21.2",
+    "readline-sync": "^1.4.10",
+    "web3": "^1.8.2",
     "xlsx": "^0.18.5"
   }
 }

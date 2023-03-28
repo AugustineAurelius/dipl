@@ -1,0 +1,30 @@
+syntax = "proto3";
+
+package test;
+
+service RouteGuide{
+    // A simple RPC where the client sends a
+    // request to the server using the stub and waits 
+    // for a response to come back, just like a normal function call.
+    rpc GetLastBlock(BlockRequest) returns (Block) {}
+    
+}
+service SetNewBlock{
+    rpc SetNewBlock ( Block) returns ( NewBlockAdded){}
+}
+
+
+message BlockRequest {
+    string where = 1;
+}
+
+message Block {
+    string Timestamp = 1;
+    string Hash = 2;
+    string MadeBy = 3;
+    string Data = 4;
+}
+
+message NewBlockAdded{
+    bool answer = 1;
+}
